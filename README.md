@@ -92,32 +92,36 @@
 
 **Зайти в заказы, выбрать заказ, нажать иконку чека.**
 
-<img src="readme_images/edostavka/how_to_get_check-s.png" width="45%">
+<img src="readme_images/edostavka/how_to_get_check-s.png" width="100%">
 
 **Пример PDF чека**
-<img src="readme_images/edostavka/ksnip_20260525-163449.png" width="45%">
 
-<img src="readme_images/edostavka/ksnip_20260525-163614.png" width="45%">
-
-
+<p align="center">
+    <img src="readme_images/edostavka/ksnip_20260525-163449.png" width="45%">
+     &nbsp;&nbsp;&nbsp;
+    <img src="readme_images/edostavka/ksnip_20260525-163614.png" width="45%">
+</p>
 
 ## Магазин - Соседи
 
 
 **Зайти в мои покупки, выбрать заказ, нажать кнопку электронный чек.**
 
-<img src="readme_images/sosedi/how_to_get_checks_0.png" width="45%">
+<img src="readme_images/sosedi/how_to_get_checks_0.png" width="100%">
 
 **Детали электронного чека в браузере.**
 
-<img src="readme_images/sosedi/how_to_get_checks_1.png" width="45%">
+<img src="readme_images/sosedi/how_to_get_checks_1.png" width="70%">
 
 **Исходный код страницы**
-<img src="readme_images/sosedi/source_code_html.png" width="45%">
+
+<img src="readme_images/sosedi/source_code_html.png" width="100%">
 
 **Пример чека**
+
 <img src="readme_images/sosedi/web_check_example.png" width="45%">
-##
+
+
 
 ```html
 
