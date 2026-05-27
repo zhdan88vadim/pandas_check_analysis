@@ -137,7 +137,7 @@ def parse_html_cheque(filepath):
     return result
 
 # Папка с HTML-файлами
-folder = './raw_data/checks_sosedi_shop'  # укажите вашу папку
+folder = '../data/raw/checks_sosedi_shop'  # укажите вашу папку
 all_data = []
 
 for fname in os.listdir(folder):
@@ -150,8 +150,11 @@ for fname in os.listdir(folder):
         except Exception as e:
             print(f"Ошибка в {fname}: {e}")
 
+timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+csv_file = f"../data/processed/sosedi_{timestamp}.csv"
+
 # Сохраняем в CSV с новой колонкой
-with open('sosedi_cheques_parsed.csv', 'w', newline='', encoding='utf-8-sig') as csvfile:
+with open(csv_file, 'w', newline='', encoding='utf-8-sig') as csvfile:
     writer = csv.writer(csvfile)
     writer.writerow(['Файл', 'Дата заказа', 'Товар', 'Количество', 'Единица', 'Вес единицы', 'Цена за единицу (BYN)', 'Итого (BYN)', 'Сумма чека (BYN)'])
     for row in all_data:

@@ -307,7 +307,7 @@ def analyze_checks(df):
 
 if __name__ == "__main__":
     # Укажите путь к директории с PDF-чеками
-    directory = "./raw_data/checks_edostavka_shop"  # Замените на ваш путь
+    directory = "../data/raw/checks_edostavka_shop"  # Замените на ваш путь
     
     # Парсим все чеки
     df_all = process_all_checks(directory)
@@ -315,7 +315,7 @@ if __name__ == "__main__":
     if not df_all.empty:
         # Сохраняем результат в CSV
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        csv_file = f"all_checks_{timestamp}.csv"
+        csv_file = f"../data/processed/edostavka_{timestamp}.csv"
         df_all.to_csv(csv_file, index=False, encoding='utf-8-sig')
         print(f"\n💾 Сохранено в {csv_file}")
         
