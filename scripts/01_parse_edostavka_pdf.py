@@ -8,15 +8,26 @@ from datetime import datetime
 def extract_weight_from_name(name):
     """Извлекает числовое значение веса/объёма из названия товара (140, 0.93, 500, 0.5 и т.д.)"""
     name_upper = name.upper()
-    
+    unit = '---'
+
+    # Определяем единицу измерения
+    if re.search(r'кг\b', name.lower()):
+        unit = 'кг'
+    elif re.search(r'\d+г\b|г\b|г\)', name.lower()):
+        unit = 'г'
+    elif re.search(r'мл\b', name.lower()):
+        unit = 'мл'
+    elif re.search(r'л\b', name.lower()):
+        unit = 'л'
+                
     # Специальный случай: формат 1/500 (означает 500 грамм)
     match_fraction = re.search(r'1/(\d+)', name_upper)
     if match_fraction:
-        return match_fraction.group(1)
+        return match_fraction.group(1), 'г'
     
     # Специальный случай: 1к (сокращение от 1 кг)
     if re.search(r'1[КК](\b|\s|$)', name_upper):
-        return '1'
+        return '1', 'кг'
     
     # Ищем паттерны: 360Г, 0.93Л, 1КГ, 10ШТ, 500Г, 200Г
     match = re.search(r'(\d+(?:[.,]\d+)?)\s*([А-Я]+)', name_upper)
@@ -25,9 +36,9 @@ def extract_weight_from_name(name):
         # Проверяем, что это единица веса/объёма/количества
         if unit in ['Г', 'КГ', 'Л', 'ШТ', 'МЛ', 'КК']:  # 'КК' для случаев '1КК' (опечатка/сокращение)
             # Заменяем запятую на точку для float
-            return value.replace(',', '.')
+            return value.replace(',', '.'), unit
     
-    return ''
+    return '', unit
 
 def extract_text_from_pdf(pdf_path):
     """Извлекает текст из PDF-файла"""
@@ -180,19 +191,9 @@ def parse_check_text_robust(text, filename):
                 
                 product_name = ' '.join(product_parts) if product_parts else "Неизвестно"
                 product_name = re.sub(r'\s+', ' ', product_name).strip()
-                
-                # Определяем единицу измерения
-                if re.search(r'кг\b', product_name.lower()):
-                    unit = 'кг'
-                elif re.search(r'\d+г\b|г\b|г\)', product_name.lower()):
-                    unit = 'г'
-                elif re.search(r'л\b', product_name.lower()):
-                    unit = 'л'
-                else:
-                    unit = 'шт'
-                
+
                 # Извлекаем вес единицы
-                weight_per_unit = extract_weight_from_name(product_name)
+                weight_per_unit, unit = extract_weight_from_name(product_name)
                 
                 items.append({
                     'Магазин': shop_name,
@@ -307,7 +308,8 @@ def analyze_checks(df):
 
 if __name__ == "__main__":
     # Укажите путь к директории с PDF-чеками
-    directory = "../data/raw/checks_edostavka_shop"  # Замените на ваш путь
+    directory = "../data/raw/checks_edostavka_shop" 
+    # directory = "/mnt/ntfs/learn_ML/lessons/scikit_learn_lessons/tables/shop_statistics/checks_edostavka_shop"
     
     # Парсим все чеки
     df_all = process_all_checks(directory)
